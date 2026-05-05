@@ -77,6 +77,7 @@ const styles: any = {
     gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
     gap: "24px",
     padding: "40px",
+    background: "#FFFFFF",
   },
 
   card: {
@@ -84,8 +85,8 @@ const styles: any = {
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     borderRadius: "16px",
     overflow: "hidden",
-    background: "#0f172a",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+    background: "#FFFFFF",
+    boxShadow: "0 10px 30px #e0e0e0",
   },
 
   image: {
@@ -93,16 +94,6 @@ const styles: any = {
     height: "260px",
     objectFit: "cover",
     transition: "0.4s",
-    filter: "grayscale(40%) contrast(1.1)",
-  },
-
-  placeholder: {
-    height: "260px",
-    background: "#1e293b",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#fff",
   },
 
   info: {

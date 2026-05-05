@@ -43,8 +43,8 @@ const styles: any = {
   container: {
     width: "100%",
     overflowX: "hidden",
-    background: "#0a0a0a",
-    color: "#e5e5e5",
+    background: "#FFFFFF",
+    color: "#8BC34A",
   },
 
   hero: {
@@ -68,7 +68,7 @@ const styles: any = {
   },
 
   subtitle: {
-    color: "#888",
+    color: "#8BC34A",
     marginTop: "-10px",
     marginBottom: "10px",
   },

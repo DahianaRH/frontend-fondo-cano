@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { HeroCarousel } from "../components/HeroCarousel";
 import cano from "../images/cano.jpg";
+import logo from "../images/Mesa de trabajo 4.png";
 
 export const Home = () => {
   return (
@@ -9,10 +10,9 @@ export const Home = () => {
       <section style={styles.hero}>
         {/* IZQUIERDA */}
         <div style={styles.left}>
-        <h1 style={styles.title}>MUUA</h1>
-          <p style={styles.tagline}>
-            Museo Universitario de la Universidad de Antioquia
-          </p>
+        <div>
+          <img src={logo} alt="MUUA" style={styles.logoImg} />
+        </div>
 
           <p style={styles.description}>
             Un espacio de conservación, investigación y experiencia del patrimonio artístico y científico.
@@ -71,10 +71,17 @@ export const Home = () => {
 
 const styles: any = {
   container: {
-    background: "#0a0a0a",
-    color: "#e5e5e5",
+    background: "#FFFFFF",
+    color: "#000000",
     width: "100%",
     overflowX: "hidden",
+  },
+
+logoImg: {
+    maxHeight: "400px",
+    width: "auto",
+    objectFit: "contain",
+    display: "flex",
   },
 
   hero: {
@@ -103,14 +110,14 @@ const styles: any = {
   },
 
   tagline: {
-    color: "#999",
+    color: "#8BC34A",
     fontSize: "18px",
   },
 
   description: {
     maxWidth: "500px",
     lineHeight: 1.6,
-    color: "#cfcfcf",
+    color: "#000000",
   },
 
   section: {

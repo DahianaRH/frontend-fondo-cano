@@ -68,7 +68,7 @@ const styles: any = {
   overlay: {
     position: "fixed",
     inset: 0,
-    background: "rgba(0,0,0,0.92)",
+    background: "#FFFFFF",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -85,7 +85,6 @@ const styles: any = {
     justifyContent: "center",
   },
 
-  // 🔥 contenedor que limita la imagen
   imageWrapper: {
     width: "100%",
     height: "80%",
@@ -98,22 +97,21 @@ const styles: any = {
   image: {
     maxWidth: "100%",
     maxHeight: "100%",
-    objectFit: "contain", // 🔥 clave para centrar correctamente
+    objectFit: "contain", 
     transition: "transform 0.2s ease",
   },
 
-  // botones SIEMPRE por encima
   nav: {
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)",
-    background: "rgba(0,0,0,0.5)",
+    background: "#33691E",
     border: "none",
     color: "#fff",
     cursor: "pointer",
     padding: "10px",
     borderRadius: "50%",
-    zIndex: 10, // 🔥 evita que la imagen los tape
+    zIndex: 10,
   },
 
   close: {

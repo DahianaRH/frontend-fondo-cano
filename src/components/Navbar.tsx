@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, Search, X } from "lucide-react";
+import logo from "../images/Mesa de trabajo 3.png";
 
 interface Props {
   onSearch: (value: string) => void;
@@ -11,40 +12,74 @@ export const Navbar = ({ onSearch }: Props) => {
   const [openSearch, setOpenSearch] = useState(false);
   const [search, setSearch] = useState("");
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const searchRef = useRef<HTMLDivElement>(null);
+
   const handleSearch = (value: string) => {
     setSearch(value);
-    onSearch(value); // 🔥 conecta con AppRouter
+    onSearch(value);
   };
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;  
+
+      //cerrar menú
+      if(menuRef.current && !menuRef.current.contains(target)) {
+        setOpenMenu(false);
+      }
+
+      //cerrar búsqueda
+      if(searchRef.current && !searchRef.current.contains(target)) {
+        setOpenSearch(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    setOpenMenu(false);
+  }, [location]);
 
   return (
     <nav style={styles.nav}>
       {/* IZQUIERDA → LOGO */}
       <Link to="/" style={styles.logo}>
-        MUUA
+        <img src={logo} alt="MUUA" style={styles.logoImg} />
       </Link>
 
       {/* DERECHA */}
       <div style={styles.right}>
         {/* INPUT INLINE */}
-        {openSearch && (
-          <input
-            autoFocus
-            value={search}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="Buscar obras..."
-            style={styles.input}
-          />
-        )}
+        <div ref={searchRef} style={styles.searchBox}>
+          {openSearch && (
+            <input
+              autoFocus
+              value={search}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Buscar obras..."
+              style={styles.input}
+            />
+          )}
 
-        {/* ICONO BUSCAR */}
-        <button
-          onClick={() => setOpenSearch(!openSearch)}
-          style={styles.iconBtn}
-        >
-          {openSearch ? <X size={20} /> : <Search size={20} />}
-        </button>
+          {/* ICONO BUSCAR */}
+          <button
+            onClick={() => setOpenSearch(!openSearch)}
+            style={styles.iconBtn}
+          >
+            {openSearch ? <X size={20} /> : <Search size={20} />}
+          </button>
+        </div>
 
         {/* MENÚ */}
+        <div ref={menuRef}>
         <button
           onClick={() => setOpenMenu(!openMenu)}
           style={styles.iconBtn}
@@ -54,9 +89,15 @@ export const Navbar = ({ onSearch }: Props) => {
 
         {openMenu && (
           <div style={styles.menu}>
-            <Link to="/login" style={styles.menuItem}>Login</Link>
+            <Link 
+            to="/login" 
+            style={styles.menuItem} 
+            onClick={() => setOpenMenu(false)}>
+              Login
+            </Link>
           </div>
         )}
+        </div>
       </div>
     </nav>
   );
@@ -67,8 +108,9 @@ const styles: any = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "14px 24px",
-    background: "rgba(15, 23, 42, 0.6)",
+    padding: "0px 24px",
+    height: "64px",
+    background: "#33691E",
     backdropFilter: "blur(12px)",
     borderBottom: "1px solid rgba(255,255,255,0.05)",
     color: "#fff",
@@ -77,12 +119,12 @@ const styles: any = {
     zIndex: 1000,
   },
 
-  logo: {
-    fontSize: "20px",
-    fontWeight: "600",
-    textDecoration: "none",
-    color: "#fff",
-    letterSpacing: "1px",
+  logoImg: {
+    height: "100%",
+    maxHeight: "200px",
+    width: "auto",
+    objectFit: "contain",
+    display: "block",
   },
 
   right: {
@@ -95,8 +137,8 @@ const styles: any = {
   input: {
     padding: "6px 12px",
     borderRadius: "8px",
-    border: "1px solid #334155",
-    background: "#1e293b",
+    border: "1px solid #33691E",
+    background: "#33691E",
     color: "#fff",
     outline: "none",
     width: "220px",
@@ -116,13 +158,13 @@ const styles: any = {
     position: "absolute",
     top: "45px",
     right: 0,
-    background: "#1e293b",
+    background: "#33691E",
     borderRadius: "10px",
     padding: "10px",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+    boxShadow: "0 8px 20px #214E18",
   },
 
   menuItem: {
@@ -130,4 +172,10 @@ const styles: any = {
     textDecoration: "none",
     fontSize: "14px",
   },
+
+  searchBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+  }
 };

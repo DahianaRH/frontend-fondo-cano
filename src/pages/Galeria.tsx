@@ -11,60 +11,63 @@ export const Galeria = ({ search }: Props) => {
   const [obras, setObras] = useState<Obra[]>([]);
   const [all, setAll] = useState<Obra[]>([]);
 
+  //Buscar obras globalmente
   useEffect(() => {
-    getObras().then((data) => {
-      setObras(data);
-      setAll(data);
-    });
-  }, []);
+    const delay = setTimeout(() => {
+      getObras(search).then(setObras);
+    }, 300);
 
-  // 🔍 búsqueda global
-  useEffect(() => {
-    let filtered = all;
+    return () => clearTimeout(delay);
+  }, [search]);
 
-    if (search) {
-      filtered = filtered.filter((o) =>
-        o.titulo.toLowerCase().includes(search.toLowerCase()) ||
-        o.autor.toLowerCase().includes(search.toLowerCase()) ||
-        o.tecnica.toLowerCase().includes(search.toLowerCase()) ||
-        (o.anio !== null && o.anio.toString().includes(search))
-      );
-    }
-
-    setObras(filtered);
-  }, [search, all]);
-
-  // 🎯 filtros por dropdown
+  //filtros por dropdown
   const handleFilter = (f: { anio?: number }) => {
-    let filtered = all;
+    if (!f.anio) return;
 
-    if (f.anio) {
-      filtered = filtered.filter((o) => o.anio === f.anio);
-    }
-
-    setObras(filtered);
+    setObras((prev) =>
+      prev.filter((o) => o.anio === f.anio)
+    );
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={styles.container}>
       <h2>Galería</h2>
 
       <Filtros onFilter={handleFilter} />
 
-      {obras.map((o) => (
-        <div key={o.id}>
-          {o.titulo} - {o.autor} - {o.anio}
-        </div>
-      ))}
+      <div style={styles.grid}>
+        {obras.map((o) => (
+          <div key={o.id} style={styles.card}>
+            <h3>{o.titulo}</h3>
+            <p>{o.autor}</p>
+            <p>{o.anio}</p>
+          </div>
+        ))}
+      </div>
     </div>
-  ); 
+  );
 };
 
 const styles: any = {
-container: {
-  minHeight: "100vh",
-  width: "100%",
-  background: "#0a0a0a",
-  color: "#e5e5e5",
-}
+  container: {
+    minHeight: "100vh",
+    width: "100%",
+    background: "#FFFFFF",
+    color: "#000000",
+    padding: "20px",
+  },
+
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+    gap: "20px",
+    marginTop: "20px",
+  },
+
+  card: {
+    padding: "12px",
+    borderRadius: "12px",
+    background: "#FFFFFF",
+    boxShadow: "0 6px 20px #ddd",
+  },
 };

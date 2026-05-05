@@ -2,17 +2,16 @@ import { api } from "./client";
 import { Obra } from "../models/obra";
 import { Facets } from "../models/facets";
 
-export const getObras = async (): Promise<Obra[]> => {
-  const res = await api.get("/obras");
+export const getObras = async (search?: string) => {
+  console.log("SEARCH ENVIADO:", search);
 
-  return res.data.data.map((o: any) => ({
-    id: o.id,
-    titulo: o.titulo,
-    autor: o.autor_nombre,
-    tecnica: o.tecnica_nombre,
-    anio: o.anio,
-    imagenes: o.imagenes ?? [],
-  }));
+  const res = await api.get("/obras", {
+    params: search ? { search } : {},
+  });
+
+  console.log("RESPUESTA BACKEND:", res.data);
+
+  return res.data.data;
 };
 
 export const getFacets = async (): Promise<Facets> => {
