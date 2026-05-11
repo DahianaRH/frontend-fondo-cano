@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 import { Busqueda } from "../pages/Busqueda";
 import { Home } from "../pages/Home";
@@ -12,7 +13,8 @@ export const AppRouter = () => {
 
   return (
     <BrowserRouter>
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}> 
+      <ScrollToTop />
+      <div style={{minHeight: "100vh", display: "flex", flexDirection: "column"}}>
         <Navbar onSearch={setSearch} />
 
         <Routes>
