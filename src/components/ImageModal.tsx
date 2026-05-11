@@ -121,7 +121,7 @@ const styles: any = {
     zIndex: 10,
     background: "none",
     border: "none",
-    color: "#fff",
+    color: "#33691E",
     cursor: "pointer",
   },
 

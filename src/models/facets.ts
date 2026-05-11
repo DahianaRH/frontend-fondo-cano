@@ -1,5 +1,7 @@
-export interface Facets {
-    anios: number[];
-    tecnicas: string[];
-    autores: string[];
+export interface FacetItem {
+  facet: "autor" | "decada" | "tecnica";
+  value: string;
+  count: number;
 }
+
+export type Facets = FacetItem[];

@@ -1,11 +1,12 @@
-import { Imagen } from "./imagen";
-
 export interface Obra {
-  id: number;
+  id: string;
   titulo: string;
-  autor: string;
+  autor_nombre: string;
+  tecnica_nombre: string;
   anio: number | null;
-  tecnica: string;
-  descripcion?: string;
-  imagenes?: Imagen[]; 
+  imagenes?: {
+    id: number;
+    url: string;
+    tipo: string;
+  }[];
 }

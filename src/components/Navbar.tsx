@@ -57,7 +57,7 @@ export const Navbar = ({ onSearch }: Props) => {
 
       {/* DERECHA */}
       <div style={styles.right}>
-        {/* INPUT INLINE */}
+        {/* INPUT INLINE
         <div ref={searchRef} style={styles.searchBox}>
           {openSearch && (
             <input
@@ -69,14 +69,14 @@ export const Navbar = ({ onSearch }: Props) => {
             />
           )}
 
-          {/* ICONO BUSCAR */}
+          {/* ICONO BUSCAR
           <button
             onClick={() => setOpenSearch(!openSearch)}
             style={styles.iconBtn}
           >
             {openSearch ? <X size={20} /> : <Search size={20} />}
           </button>
-        </div>
+        </div>*/}
 
         {/* MENÚ */}
         <div ref={menuRef}>
@@ -94,6 +94,13 @@ export const Navbar = ({ onSearch }: Props) => {
             style={styles.menuItem} 
             onClick={() => setOpenMenu(false)}>
               Login
+            </Link>
+            <Link
+            to="/busqueda" 
+            style={styles.menuItem} 
+            onClick={() => setOpenMenu(false)}
+            >
+              Búsqueda
             </Link>
           </div>
         )}

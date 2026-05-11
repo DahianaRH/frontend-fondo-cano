@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getFacets } from "../api/obras.api";
-import { Facets } from "../models/facets";
+import { parseFacets } from "../utils/facets";
 
 interface Props {
   onFilter: (filters: {
@@ -10,11 +10,20 @@ interface Props {
   }) => void;
 }
 
+type ParsedFacets = {
+  autores: string[];
+  tecnicas: string[];
+  decadas: string[];
+};
+
 export const Filtros = ({ onFilter }: Props) => {
-  const [facets, setFacets] = useState<Facets | null>(null);
+  const [facets, setFacets] = useState<ParsedFacets | null>(null);
 
   useEffect(() => {
-    getFacets().then(setFacets);
+    getFacets().then((data) => {
+      const parsed = parseFacets(data);
+      setFacets(parsed);
+    });
   }, []);
 
   if (!facets) return <p>Cargando filtros...</p>;
@@ -25,14 +34,16 @@ export const Filtros = ({ onFilter }: Props) => {
       <select
         onChange={(e) =>
           onFilter({
-            anio: e.target.value ? Number(e.target.value) : undefined,
+            anio: e.target.value 
+            ? Number(e.target.value.replace("s", ""))
+            : undefined,
           })
         }
       >
-        <option value="">Año</option>
-        {facets.anios.map((a) => (
-          <option key={a} value={a}>
-            {a}
+        <option value="">Década</option>
+        {facets.decadas.map((d) => (
+          <option key={d} value={d}>
+            {d}
           </option>
         ))}
       </select>

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
-import { Galeria } from "../pages/Galeria";
+import { Busqueda } from "../pages/Busqueda";
 import { Home } from "../pages/Home";
 import { FondoArtista } from "../pages/FondoArtista";
 import { Login } from "../pages/Login";
@@ -19,7 +19,7 @@ export const AppRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/fondo/cano" element={<FondoArtista />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/galeria" element={<Galeria search={search} />} />
+          <Route path="/busqueda" element={<Busqueda />} />
         </Routes>
       </div>
     </BrowserRouter>
