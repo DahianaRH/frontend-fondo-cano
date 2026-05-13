@@ -1,7 +1,9 @@
 import { api } from "./client";
 
 export const getObrasWithFilters = async (filters: any) => {
-  const res = await api.get("/obras", { params: filters });
+  const res = await api.get("/obras", { 
+    params: { ...filters, limit: 100, page: 1 }, 
+  });
 
   return res.data.data.map((o: any) => ({
     id: o.id,
