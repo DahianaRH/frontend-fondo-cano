@@ -6,7 +6,11 @@ export const getObras = async (search?: string) => {
   console.log("SEARCH ENVIADO:", search);
 
   const res = await api.get("/obras", {
-    params: search ? { search } : {},
+    params: {
+      ...(search ? { search } : {}),
+      limit: 100,
+      page: 1,
+    }
   });
 
   console.log("RESPUESTA BACKEND:", res.data);
