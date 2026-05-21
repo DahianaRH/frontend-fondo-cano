@@ -30,6 +30,10 @@ export const FondoArtista = () => {
           <p style={styles.subtitle}>
             (Yarumal, Antioquia, 1865 - Bogotá, 1935)
           </p>
+          <p style={styles.intro}>
+            Recorrido biográfico y selección de obras para explorar su legado
+            artístico en Colombia.
+          </p>
 
           <div style={styles.accordionWrapper}>
             {/* ACORDEÓN */}
@@ -209,7 +213,9 @@ export const FondoArtista = () => {
          </div>
       </section>
       
-      <ObraCarousel />
+      <section style={styles.gallery}>
+        <ObraCarousel />
+      </section>
     </div>
   );
 };
@@ -223,29 +229,37 @@ const styles: any = {
   },
 
   hero: {
-    minHeight: "100vh",
+    minHeight: "auto",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "80px 24px",
+    padding: "40px 20px 12px",
   },
 
   textBlock: {
-    maxWidth: "1000px", 
+    maxWidth: "1000px",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     lineHeight: 1.7,
+    gap: "8px",
   },
 
   title: {
     fontSize: "clamp(32px, 5vw, 56px)",
     margin: 0,
+    color: "#3D6A2A",
   },
 
   subtitle: {
     color: "#8BC34A",
-    marginTop: "-10px",
-    marginBottom: "10px",
+    margin: 0,
+  },
+
+  intro: {
+    margin: "2px 0 14px",
+    maxWidth: "680px",
+    color: "#4D634A",
   },
 
   accordionContainer: {
@@ -260,7 +274,6 @@ const styles: any = {
     overflow: "hidden",
     width: "100%",
     maxWidth: "900px",
-    minWidth: "900px",
     boxSizing: "border-box",
     scrollMarginTop: "100px",
   },
@@ -281,16 +294,17 @@ const styles: any = {
   background: "#FFFFFF",
   color: "#333333",
   padding: "20px",
-  minHeight: "220px",
+  minHeight: "200px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   transition: "all 0.3s ease",
+  lineHeight: 1.65,
   },
 
   accordionWrapper: {
-  marginTop: "40px",
-  minHeight: "420px",
+  marginTop: "12px",
+  minHeight: "0",
 },
 
   credit: {
@@ -303,7 +317,6 @@ const styles: any = {
 },
 
   gallery: {
-    minHeight: "100vh",
-    padding: "80px 24px",
+    padding: "8px 0 28px",
   },
 };

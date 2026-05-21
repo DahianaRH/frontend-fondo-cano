@@ -85,12 +85,12 @@ logoImg: {
   },
 
   hero: {
-    height: "100vh",
+    minHeight: "72vh",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: "40px",
+    gap: "28px",
     alignItems: "center",
-    padding: "0 6%",
+    padding: "28px 6% 18px",
   },
 
   left: {
@@ -100,7 +100,7 @@ logoImg: {
   },
 
   right: {
-    height: "70vh",
+    height: "58vh",
   },
 
   title: {
@@ -121,7 +121,7 @@ logoImg: {
   },
 
   section: {
-    padding: "100px 6%",
+    padding: "44px 6%",
   },
 
   heading: {

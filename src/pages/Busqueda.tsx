@@ -12,6 +12,7 @@ export const Busqueda = () => {
 
   const [allObras, setAllObras] = useState<Obra[]>([]);
   const [obras, setObras] = useState<Obra[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   //Normalizador (clave para que la búsqueda funcione bien)
   const normalize = (str: string | null | undefined) => {
@@ -28,6 +29,8 @@ export const Busqueda = () => {
     const fetchData = async () => {
       const res = await getObrasWithFilters({});
       setAllObras(res);
+      setObras(res);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -66,25 +69,69 @@ export const Busqueda = () => {
     setObras(filtered);
   };
 
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>Búsqueda avanzada</h2>
+  const handleReset = () => {
+    const clean = { anio: "", tecnica: "", autor: "", titulo: "" };
+    setFilters(clean);
+    setObras(allObras);
+  };
 
-      {/* FORM */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <input name="titulo" placeholder="Título" onChange={handleChange} />
-        <input name="autor" placeholder="Autor" onChange={handleChange} />
-        <input name="tecnica" placeholder="Técnica" onChange={handleChange} />
-        <input name="anio" placeholder="Año" onChange={handleChange} />
+  return (
+    <div style={styles.page}>
+      <section style={styles.header}>
+        <h2 style={styles.title}>Búsqueda avanzada</h2>
+        <p style={styles.subtitle}>
+          Encuentra obras por título, autor, técnica o año.
+        </p>
+      </section>
+
+      <div style={styles.form}>
+        <input
+          name="titulo"
+          placeholder="Título"
+          value={filters.titulo}
+          onChange={handleChange}
+          style={styles.input}
+        />
+        <input
+          name="autor"
+          placeholder="Autor"
+          value={filters.autor}
+          onChange={handleChange}
+          style={styles.input}
+        />
+        <input
+          name="tecnica"
+          placeholder="Técnica"
+          value={filters.tecnica}
+          onChange={handleChange}
+          style={styles.input}
+        />
+        <input
+          name="anio"
+          type="number"
+          min="1000"
+          max="2099"
+          placeholder="Año"
+          value={filters.anio}
+          onChange={handleChange}
+          style={styles.input}
+        />
       </div>
 
-      <button onClick={handleSearch} style={{ marginTop: 10 }}>
-        Buscar
-      </button>
+      <div style={styles.actions}>
+        <button onClick={handleSearch} style={styles.primaryButton}>
+          Buscar
+        </button>
+        <button onClick={handleReset} style={styles.secondaryButton}>
+          Limpiar
+        </button>
+        <span style={styles.resultCount}>{obras.length} resultados</span>
+      </div>
 
-      {/* RESULTADOS */}
       <div style={styles.resultsContainer}>
-        {obras.length === 0 ? (
+        {isLoading ? (
+          <p style={styles.empty}>Cargando obras...</p>
+        ) : obras.length === 0 ? (
           <p>No hay resultados</p>
         ) : (
           obras.map((obra) => (
@@ -93,6 +140,7 @@ export const Busqueda = () => {
                 <img
                   src={obra.imagenes[0].url}
                   alt={obra.titulo}
+                  loading="lazy"
                   style={styles.image}
                 />
               )}
@@ -121,11 +169,68 @@ export const Busqueda = () => {
 };
 
 const styles: any = {
-  resultsContainer: {
-    marginTop: 30,
+  page: {
+    padding: "28px 20px 36px",
+    maxWidth: "1200px",
+    margin: "0 auto",
+  },
+  header: {
+    marginBottom: "16px",
+  },
+  title: {
+    margin: 0,
+    color: "#253922",
+    fontSize: "clamp(24px, 3vw, 34px)",
+  },
+  subtitle: {
+    margin: "8px 0 0",
+    color: "#5A6957",
+  },
+  form: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-    gap: "24px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: "10px",
+  },
+  input: {
+    padding: "10px 12px",
+    borderRadius: "10px",
+    border: "1px solid #CADBC4",
+    outline: "none",
+    background: "#fff",
+  },
+  actions: {
+    display: "flex",
+    gap: "10px",
+    alignItems: "center",
+    marginTop: "12px",
+    flexWrap: "wrap",
+  },
+  primaryButton: {
+    background: "#33691E",
+    color: "#fff",
+    border: "none",
+    borderRadius: "10px",
+    padding: "10px 16px",
+    cursor: "pointer",
+  },
+  secondaryButton: {
+    background: "#EFF4ED",
+    color: "#2F4E26",
+    border: "1px solid #D4E0D0",
+    borderRadius: "10px",
+    padding: "10px 16px",
+    cursor: "pointer",
+  },
+  resultCount: {
+    color: "#5A6F52",
+    fontSize: "14px",
+    fontWeight: 600,
+  },
+  resultsContainer: {
+    marginTop: 22,
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+    gap: "18px",
     width: "100%",
   },
 
@@ -133,15 +238,16 @@ const styles: any = {
     background: "#fff",
     borderRadius: "14px",
     overflow: "hidden",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.07)",
     transition: "transform 0.2s ease",
     display: "flex",
     flexDirection: "column",
+    border: "1px solid #EEF1EC",
   },
 
   image: {
     width: "100%",
-    height: "260px",
+    aspectRatio: "4 / 5",
     objectFit: "cover",
     background: "#f5f5f5",
   },
@@ -167,5 +273,8 @@ const styles: any = {
     marginTop: "10px",
     color: "#8BC34A",
     fontWeight: "bold",
+  },
+  empty: {
+    color: "#566657",
   },
 };
